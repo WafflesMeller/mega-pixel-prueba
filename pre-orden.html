@@ -67,6 +67,27 @@
         background: #333;
         border-radius: 10px;
       }
+      /* Modal Transition */
+      #phone-modal {
+        transition: opacity 0.3s ease-in-out, visibility 0.3s;
+      }
+      #phone-modal.hidden-modal {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      #phone-modal.visible-modal {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      #phone-modal .modal-content {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(0.95) translateY(10px);
+      }
+      #phone-modal.visible-modal .modal-content {
+        transform: scale(1) translateY(0);
+      }
     </style>
   </head>
   <body
@@ -214,9 +235,8 @@
         </div>
 
         <div class="w-full flex flex-col gap-4">
-          <a
-            onclick="enviarPedidoWhatsApp()"
-            href="javascript:void(0)"
+          <button
+            onclick="toggleModal(true)"
             class="group relative w-full flex items-center justify-center gap-3 bg-primary hover:bg-primary-hover text-black font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-neon hover:shadow-[0_0_30px_rgba(203,230,0,0.5)] hover:-translate-y-1 overflow-hidden cursor-pointer"
           >
             <div
@@ -234,7 +254,7 @@
             </svg>
 
             <span class="text-lg relative z-20">Finalizar en WhatsApp</span>
-          </a>
+          </button>
 
           <a
             href="index.html"
@@ -271,23 +291,104 @@
         </p>
       </div>
     </footer>
-    <script>
-      function enviarPedidoWhatsApp() {
-        // 1. TU NÚMERO (Solo números, sin el +)
-        const telefono = "584242642845";
 
-        // 2. Datos
+    <div
+      id="phone-modal"
+      class="hidden-modal fixed inset-0 z-[100] flex items-center justify-center px-4"
+    >
+      <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onclick="toggleModal(false)"
+      ></div>
+
+      <div
+        class="modal-content relative w-full max-w-sm bg-[#1A1A1A] border border-border-dark rounded-2xl p-6 shadow-2xl"
+      >
+        <button
+          onclick="toggleModal(false)"
+          class="absolute top-4 right-4 text-gray-500 hover:text-white"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <div
+          class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4 text-primary"
+        >
+          <span class="material-symbols-outlined text-2xl">smartphone</span>
+        </div>
+
+        <h3 class="text-xl font-bold text-white mb-2">Confirma tu Número</h3>
+        <p class="text-gray-400 text-sm mb-5 leading-relaxed">
+          Para que el agente pueda contactarte rápidamente, por favor ingresa tu
+          número de WhatsApp.
+        </p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-500 uppercase mb-1"
+              >Tu WhatsApp</label
+            >
+            <input
+              type="tel"
+              id="customer-phone"
+              placeholder="Ej: 0412 123 4567"
+              class="w-full bg-black border border-border-dark rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-lg"
+            />
+          </div>
+
+          <button
+            onclick="enviarConTelefono()"
+            class="w-full bg-primary text-black font-bold py-3.5 rounded-xl hover:bg-primary-hover transition-colors flex items-center justify-center gap-2"
+          >
+            <span>Enviar Mensaje</span>
+            <span class="material-symbols-outlined text-lg">send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Lógica del Modal
+      function toggleModal(show) {
+        const modal = document.getElementById("phone-modal");
+        const input = document.getElementById("customer-phone");
+
+        if (show) {
+          modal.classList.remove("hidden-modal");
+          modal.classList.add("visible-modal");
+          // Focus automático en el input
+          setTimeout(() => input.focus(), 100);
+        } else {
+          modal.classList.remove("visible-modal");
+          modal.classList.add("hidden-modal");
+        }
+      }
+
+      // Lógica de Envío
+      function enviarConTelefono() {
+        const inputTelefono = document.getElementById("customer-phone").value;
+
+        // Validación simple
+        if (!inputTelefono || inputTelefono.length < 10) {
+          alert("Por favor ingresa un número válido");
+          return;
+        }
+
+        // 1. NÚMERO DE LA TIENDA (Fijo)
+        const storePhone = "584242642845";
+
+        // 2. Datos del pedido
         const ordenID = "#PRE-8821";
         const cliente = "Juan Pérez";
         const total = "$570.00";
 
-        // 3. Construimos el mensaje línea por línea
-        // Usamos \n para los saltos de línea
+        // 3. Construir Mensaje
         let lineas = [
           "*¡Hola MegaPixel!* 👋 Vengo de la web para finalizar mi pedido.",
           "",
           `📄 *ID de Orden:* \`${ordenID}\``,
           `👤 *Cliente:* ${cliente}`,
+          `📱 *Teléfono de Contacto:* ${inputTelefono}`, // Agregamos el número del cliente aquí
           "",
           "📦 *Resumen del Pedido:*",
           "▪️ 1x GeForce RTX 3060 Ti",
@@ -300,16 +401,15 @@
           "📍 _Quedo atento a los datos para realizar el pago. Gracias._",
         ];
 
-        // Unimos las líneas con un salto de línea real
         let mensajeCompleto = lineas.join("\n");
 
-        // 4. Codificación ROBUSTA (api.whatsapp.com + encodeURIComponent)
-        const url = `https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(
+        // 4. Abrir WhatsApp
+        const url = `https://api.whatsapp.com/send?phone=${storePhone}&text=${encodeURIComponent(
           mensajeCompleto
         )}`;
 
-        // 5. Abrir
         window.open(url, "_blank");
+        toggleModal(false); // Cerrar modal después de enviar
       }
     </script>
   </body>

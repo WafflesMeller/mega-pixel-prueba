@@ -41,245 +41,125 @@
         font-family: "Space Grotesk", sans-serif;
       }
       /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #000;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 4px;
-      }
-
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #000; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+      
       .glass-panel {
         background: rgba(20, 20, 20, 0.95);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
-
+      
       /* Range Slider */
-      input[type="range"] {
-        -webkit-appearance: none;
-        width: 100%;
-        background: transparent;
-      }
+      input[type="range"] { -webkit-appearance: none; width: 100%; background: transparent; }
       input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 16px;
-        width: 16px;
-        border-radius: 50%;
-        background: #cbe600;
-        cursor: pointer;
-        margin-top: -6px;
+        -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+        background: #cbe600; cursor: pointer; margin-top: -6px;
       }
       input[type="range"]::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 4px;
-        cursor: pointer;
-        background: #333;
-        border-radius: 2px;
+        width: 100%; height: 4px; cursor: pointer; background: #333; border-radius: 2px;
       }
-
+      
       /* Drawers Animation */
-      .sidebar-panel {
-        transition: transform 0.3s ease-in-out;
-      }
-      #menu-sidebar {
-        transform: translateX(-100%);
-      }
-      .menu-open #menu-sidebar {
-        transform: translateX(0);
-      }
-      #cart-sidebar {
-        transform: translateX(100%);
-      }
-      .cart-open #cart-sidebar {
-        transform: translateX(0);
-      }
-
-      .overlay {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-      }
-      .menu-open .overlay,
-      .cart-open .overlay {
-        opacity: 1;
-        pointer-events: auto;
-      }
+      .sidebar-panel { transition: transform 0.3s ease-in-out; }
+      #menu-sidebar { transform: translateX(-100%); }
+      .menu-open #menu-sidebar { transform: translateX(0); }
+      #cart-sidebar { transform: translateX(100%); }
+      .cart-open #cart-sidebar { transform: translateX(0); }
+      
+      .overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+      .menu-open .overlay, .cart-open .overlay { opacity: 1; pointer-events: auto; }
 
       /* Toast */
-      .toast {
-        transform: translateY(100px);
-        opacity: 0;
-        transition: all 0.3s;
-      }
-      .toast.show {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      .toast { transform: translateY(100px); opacity: 0; transition: all 0.3s; }
+      .toast.show { transform: translateY(0); opacity: 1; }
     </style>
   </head>
   <body class="min-h-screen flex flex-col antialiased">
-    <header
-      class="fixed top-0 left-0 w-full z-50 glass-panel h-20 transition-all duration-300"
-    >
-      <div
-        class="h-full px-4 lg:px-10 relative flex items-center justify-between"
-      >
+    
+    <header class="fixed top-0 left-0 w-full z-50 glass-panel h-20 transition-all duration-300">
+      <div class="h-full px-4 lg:px-10 relative flex items-center justify-between">
+        
         <div class="flex-1 flex items-center justify-start">
-          <button
-            onclick="toggleMenu(true)"
-            class="lg:hidden p-2 text-gray-300 hover:text-primary transition-colors"
-          >
-            <span class="material-symbols-outlined text-3xl">menu</span>
-          </button>
+            <button onclick="toggleMenu(true)" class="lg:hidden p-2 text-gray-300 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
 
-          <div class="hidden lg:flex items-center gap-3 text-white shrink-0">
-            <div class="size-8 text-primary">
-              <img
-                src="image.png"
-                class="w-10 h-10 object-contain"
-                alt="Logo"
-              />
+            <div class="hidden lg:flex items-center gap-3 text-white shrink-0">
+                <div class="size-8 text-primary">
+                    <img src="image.png" class="w-10 h-10 object-contain" alt="Logo">
+                </div>
+                <h1 class="text-xl font-bold tracking-tight">MegaPixel Vzla</h1>
             </div>
-            <h1 class="text-xl font-bold tracking-tight">MegaPixel Vzla</h1>
-          </div>
         </div>
 
         <div class="flex-1 flex justify-center">
-          <div
-            class="lg:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2"
-          >
-            <div class="size-8 text-primary">
-              <img
-                src="image.png"
-                class="w-10 h-10 object-contain"
-                alt="Logo"
-              />
+            <div class="lg:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+                <div class="size-8 text-primary">
+                    <img src="image.png" class="w-10 h-10 object-contain" alt="Logo">
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-white">MegaPixel</h1>
             </div>
-            <h1 class="text-xl font-bold tracking-tight text-white">
-              MegaPixel
-            </h1>
-          </div>
 
-          <div class="hidden lg:block relative w-full max-w-xl">
-            <input
-              id="desktop-search"
-              class="w-full bg-[#1A1A1A] border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:ring-primary focus:border-primary placeholder-gray-500"
-              placeholder="Buscar productos (GPU, CPU, RAM)..."
-              type="text"
-            />
-            <span
-              class="material-symbols-outlined absolute right-3 top-2.5 text-gray-400"
-              >search</span
-            >
-          </div>
+            <div class="hidden lg:block relative w-full max-w-xl">
+                <input id="desktop-search" class="w-full bg-[#1A1A1A] border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:ring-primary focus:border-primary placeholder-gray-500" placeholder="Buscar productos (GPU, CPU, RAM)..." type="text">
+                <span class="material-symbols-outlined absolute right-3 top-2.5 text-gray-400">search</span>
+            </div>
         </div>
 
         <div class="flex-1 flex justify-end items-center gap-3">
-          <button
-            onclick="toggleCart(true)"
-            class="relative p-2 text-gray-300 hover:text-primary transition-colors rounded-full hover:bg-white/5"
-          >
-            <span class="material-symbols-outlined text-3xl lg:text-2xl"
-              >shopping_cart</span
-            >
-            <span
-              id="cart-count"
-              class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-black transform translate-x-1/4 -translate-y-1/4 bg-primary rounded-full hidden"
-              >0</span
-            >
-          </button>
+            <button onclick="toggleCart(true)" class="relative p-2 text-gray-300 hover:text-primary transition-colors rounded-full hover:bg-white/5">
+                <span class="material-symbols-outlined text-3xl lg:text-2xl">shopping_cart</span>
+                <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-black transform translate-x-1/4 -translate-y-1/4 bg-primary rounded-full hidden">0</span>
+            </button>
         </div>
       </div>
     </header>
 
-    <div
-      id="mobile-search-sticky"
-      class="fixed top-20 left-0 w-full z-40 bg-black border-b border-border-dark px-4 py-3 lg:hidden shadow-lg"
-    >
-      <div class="relative">
-        <div
-          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-        >
-          <span class="material-symbols-outlined text-gray-400 text-sm"
-            >search</span
-          >
+    <div id="mobile-search-sticky" class="fixed top-20 left-0 w-full z-40 bg-black border-b border-border-dark px-4 py-3 lg:hidden shadow-lg">
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <span class="material-symbols-outlined text-gray-400 text-sm">search</span>
+            </div>
+            <input id="mobile-search" class="search-input block w-full p-2.5 pl-9 text-sm text-white bg-[#1A1A1A] border border-border-dark rounded-lg focus:ring-primary focus:border-primary placeholder-gray-400" placeholder="Buscar productos..." type="text" />
         </div>
-        <input
-          id="mobile-search"
-          class="search-input block w-full p-2.5 pl-9 text-sm text-white bg-[#1A1A1A] border border-border-dark rounded-lg focus:ring-primary focus:border-primary placeholder-gray-400"
-          placeholder="Buscar productos..."
-          type="text"
-        />
-      </div>
     </div>
 
     <div class="flex pt-40 lg:pt-24 min-h-screen">
-      <aside
-        class="w-72 fixed h-[calc(100vh-80px)] overflow-y-auto hidden lg:flex flex-col border-r border-border-dark bg-[#0a0a0a] p-6 gap-8 z-30"
-      >
+      
+      <aside class="w-72 fixed h-[calc(100vh-80px)] overflow-y-auto hidden lg:flex flex-col border-r border-border-dark bg-[#0a0a0a] p-6 gap-8 z-30">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-xl"
-              >tune</span
-            >
-            Filtros
-          </h2>
-          <button
-            onclick="resetFilters()"
-            class="text-xs text-gray-500 hover:text-white underline"
-          >
-            Limpiar
-          </button>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-xl">tune</span> Filtros
+            </h2>
+            <button onclick="resetFilters()" class="text-xs text-gray-500 hover:text-white underline">Limpiar</button>
         </div>
         <div id="desktop-filters-container"></div>
       </aside>
 
       <main class="flex-1 w-full p-4 lg:p-10 lg:ml-72 bg-background-black">
-        <div
-          class="lg:hidden mb-8 bg-[#1A1A1A] border border-border-dark rounded-xl p-5"
-        >
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="font-bold text-white flex items-center gap-2">
-              <span class="material-symbols-outlined text-primary"
-                >filter_list</span
-              >
-              Filtros
-            </h3>
-            <button
-              onclick="resetFilters()"
-              class="text-xs text-primary underline"
-            >
-              Limpiar todo
-            </button>
-          </div>
-
-          <div id="mobile-filters-container" class="space-y-5"></div>
+        
+        <div class="lg:hidden mb-8 bg-[#1A1A1A] border border-border-dark rounded-xl p-5">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">filter_list</span> Filtros
+                </h3>
+                <button onclick="resetFilters()" class="text-xs text-primary underline">Limpiar todo</button>
+            </div>
+            
+            <div id="mobile-filters-container" class="space-y-5"></div>
         </div>
 
-        <div
-          class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
-        >
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h1
-              class="text-2xl lg:text-3xl font-bold text-white tracking-tight"
-            >
-              Catálogo de Productos
-            </h1>
-            <p class="text-gray-400 text-sm mt-1" id="results-count">
-              Cargando...
-            </p>
+            <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight">Catálogo de Productos</h1>
+            <p class="text-gray-400 text-sm mt-1" id="results-count">Cargando...</p>
           </div>
           <div class="flex items-center gap-2">
             <span class="text-sm text-gray-400">Ordenar:</span>
-            <select
-              id="sort-select"
-              class="appearance-none bg-[#1A1A1A] border border-border-dark text-white text-sm rounded-lg focus:ring-primary block w-40 p-2 cursor-pointer"
-            >
+            <select id="sort-select" class="appearance-none bg-[#1A1A1A] border border-border-dark text-white text-sm rounded-lg focus:ring-primary block w-40 p-2 cursor-pointer">
               <option value="default">Relevancia</option>
               <option value="price-asc">Precio: Bajo a Alto</option>
               <option value="price-desc">Precio: Alto a Bajo</option>
@@ -287,92 +167,47 @@
           </div>
         </div>
 
-        <div
-          id="product-grid"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[400px]"
-        ></div>
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[400px]"></div>
 
-        <div
-          id="pagination"
-          class="mt-12 flex justify-center items-center gap-2"
-        ></div>
+        <div id="pagination" class="mt-12 flex justify-center items-center gap-2"></div>
       </main>
     </div>
 
-    <div
-      onclick="closeAllDrawers()"
-      id="overlay"
-      class="fixed inset-0 bg-black/80 z-[60] overlay hidden"
-    ></div>
+    <div onclick="closeAllDrawers()" id="overlay" class="fixed inset-0 bg-black/80 z-[60] overlay hidden"></div>
 
-    <aside
-      id="menu-sidebar"
-      class="fixed top-0 left-0 h-full w-[80%] sm:w-[350px] bg-[#0a0a0a] border-r border-border-dark z-[70] sidebar-panel flex flex-col shadow-2xl"
-    >
-      <div
-        class="p-6 border-b border-border-dark flex items-center justify-between bg-black/50 backdrop-blur-md h-20"
-      >
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary">menu</span> Menú
-        </h2>
-        <button
-          onclick="toggleMenu(false)"
-          class="text-gray-500 hover:text-white"
-        >
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <div class="flex-1 overflow-y-auto p-6">
-        <nav class="space-y-6">
-          <a
-            href="#"
-            class="flex items-center gap-4 text-lg font-medium text-white hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5"
-          >
-            <span class="material-symbols-outlined text-gray-400">home</span>
-            Inicio
-          </a>
-          <a
-            href="#"
-            class="flex items-center gap-4 text-lg font-medium text-white hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5"
-          >
-            <span class="material-symbols-outlined text-gray-400"
-              >inventory_2</span
-            >
-            Mis Pedidos
-          </a>
-          <a
-            href="#"
-            class="flex items-center gap-4 text-lg font-medium text-white hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5"
-          >
-            <span class="material-symbols-outlined text-gray-400"
-              >support_agent</span
-            >
-            Soporte
-          </a>
-        </nav>
-      </div>
-      <div class="p-6 border-t border-border-dark">
-        <p class="text-xs text-gray-500 text-center">© 2024 MegaPixel Vzla</p>
-      </div>
+    <aside id="menu-sidebar" class="fixed top-0 left-0 h-full w-[80%] sm:w-[350px] bg-[#0a0a0a] border-r border-border-dark z-[70] sidebar-panel flex flex-col shadow-2xl">
+        <div class="p-6 border-b border-border-dark flex items-center justify-between bg-black/50 backdrop-blur-md h-20">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">menu</span> Menú
+            </h2>
+            <button onclick="toggleMenu(false)" class="text-gray-500 hover:text-white">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6">
+            <nav class="space-y-6">
+                <a href="#" class="flex items-center gap-4 text-lg font-medium text-white hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5">
+                    <span class="material-symbols-outlined text-gray-400">home</span> Inicio
+                </a>
+                <a href="#" class="flex items-center gap-4 text-lg font-medium text-white hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5">
+                    <span class="material-symbols-outlined text-gray-400">inventory_2</span> Mis Pedidos
+                </a>
+                <a href="#" class="flex items-center gap-4 text-lg font-medium text-white hover:text-primary transition-colors p-2 rounded-lg hover:bg-white/5">
+                    <span class="material-symbols-outlined text-gray-400">support_agent</span> Soporte
+                </a>
+            </nav>
+        </div>
+        <div class="p-6 border-t border-border-dark">
+            <p class="text-xs text-gray-500 text-center">© 2024 MegaPixel Vzla</p>
+        </div>
     </aside>
 
-    <aside
-      id="cart-sidebar"
-      class="fixed top-0 right-0 h-full w-[85%] sm:w-[400px] bg-[#0a0a0a] border-l border-border-dark z-[70] sidebar-panel flex flex-col shadow-2xl"
-    >
-      <div
-        class="p-6 border-b border-border-dark flex items-center justify-between bg-black/50 backdrop-blur-md h-20"
-      >
+    <aside id="cart-sidebar" class="fixed top-0 right-0 h-full w-[85%] sm:w-[400px] bg-[#0a0a0a] border-l border-border-dark z-[70] sidebar-panel flex flex-col shadow-2xl">
+      <div class="p-6 border-b border-border-dark flex items-center justify-between bg-black/50 backdrop-blur-md h-20">
         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary"
-            >shopping_bag</span
-          >
-          Carrito
+          <span class="material-symbols-outlined text-primary">shopping_bag</span> Carrito
         </h2>
-        <button
-          onclick="toggleCart(false)"
-          class="text-gray-500 hover:text-white"
-        >
+        <button onclick="toggleCart(false)" class="text-gray-500 hover:text-white">
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
@@ -384,18 +219,17 @@
           <span>Total:</span>
           <span id="cart-total" class="text-primary">$0.00</span>
         </div>
+        <a href="pre-orden.html" >
         <button
           class="w-full bg-primary text-black font-bold py-3 rounded-full hover:bg-white transition-colors"
         >
           Finalizar Compra
         </button>
+        </a>
       </div>
     </aside>
 
-    <div
-      id="toast"
-      class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#1A1A1A] border border-primary text-white px-6 py-3 rounded-full shadow-[0_0_15px_rgba(203,230,0,0.3)] flex items-center gap-3 toast z-[80]"
-    >
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#1A1A1A] border border-primary text-white px-6 py-3 rounded-full shadow-[0_0_15px_rgba(203,230,0,0.3)] flex items-center gap-3 toast z-[80]">
       <span class="material-symbols-outlined text-primary">check_circle</span>
       <span class="font-medium">Agregado al carrito</span>
     </div>
@@ -405,7 +239,7 @@
     <script>
       // State
       let state = {
-        products: [],
+        products: [], 
         filteredProducts: [],
         cart: [],
         filters: {
@@ -420,11 +254,11 @@
       };
 
       document.addEventListener("DOMContentLoaded", () => {
-        if (typeof productsDB !== "undefined") {
-          state.products = [...productsDB];
-          state.filteredProducts = [...productsDB];
+        if (typeof productsDB !== 'undefined') {
+            state.products = [...productsDB];
+            state.filteredProducts = [...productsDB];
         } else {
-          console.error("products.js no encontrado");
+            console.error("products.js no encontrado");
         }
 
         renderFiltersUI();
@@ -432,31 +266,24 @@
         setupEventListeners();
       });
 
-      // --- GENERACIÓN DE UI DE FILTROS (Desktop & Mobile) ---
+      // --- GENERACIÓN DE UI DE FILTROS ---
       function renderFiltersUI() {
         const categories = [...new Set(state.products.map((p) => p.category))];
-
-        // HTML Template para Categorías
+        
         const categoriesHTML = `
             <div class="space-y-3">
-                <a href="detalles.html"
                 <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Categorías</h4>
                 <div class="space-y-2 category-list">
-                    ${categories
-                      .map(
-                        (cat) => `
+                    ${categories.map(cat => `
                         <label class="flex items-center space-x-3 cursor-pointer group">
                             <input type="checkbox" value="${cat}" class="category-checkbox w-4 h-4 rounded border-gray-600 bg-[#1A1A1A] focus:ring-primary focus:ring-offset-black transition-colors" />
                             <span class="text-sm text-gray-300 group-hover:text-white transition-colors">${cat}</span>
                         </label>
-                    `
-                      )
-                      .join("")}
+                    `).join('')}
                 </div>
             </div>
         `;
 
-        // HTML Template para Precio
         const priceHTML = `
             <div class="space-y-4">
                 <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">
@@ -468,12 +295,8 @@
             </div>
         `;
 
-        // Inyectar en Desktop Sidebar
-        document.getElementById("desktop-filters-container").innerHTML =
-          categoriesHTML + '<div class="h-6"></div>' + priceHTML;
-
-        // Inyectar en Mobile Top Section
-        document.getElementById("mobile-filters-container").innerHTML = `
+        document.getElementById('desktop-filters-container').innerHTML = categoriesHTML + '<div class="h-6"></div>' + priceHTML;
+        document.getElementById('mobile-filters-container').innerHTML = `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 ${categoriesHTML}
                 ${priceHTML}
@@ -486,85 +309,56 @@
         const grid = document.getElementById("product-grid");
         const { currentPage, itemsPerPage } = state.pagination;
         const start = (currentPage - 1) * itemsPerPage;
-        const paginatedItems = state.filteredProducts.slice(
-          start,
-          start + itemsPerPage
-        );
+        const paginatedItems = state.filteredProducts.slice(start, start + itemsPerPage);
 
-        document.getElementById(
-          "results-count"
-        ).innerText = `Mostrando ${paginatedItems.length} de ${state.filteredProducts.length} resultados`;
+        document.getElementById("results-count").innerText = `Mostrando ${paginatedItems.length} de ${state.filteredProducts.length} resultados`;
 
         if (paginatedItems.length === 0) {
           grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500">No se encontraron productos.</div>`;
           return;
         }
 
-        grid.innerHTML = paginatedItems
-          .map((product) => {
-            // Verificamos si ya está en el carrito para cambiar el estilo del botón
-            const isInCart = state.cart.some((item) => item.id === product.id);
+        grid.innerHTML = paginatedItems.map((product) => {
+            const isInCart = state.cart.some(item => item.id === product.id);
+            const btnClass = isInCart 
+                ? "bg-primary/20 text-primary border border-primary cursor-default" 
+                : "bg-transparent border border-gray-600 text-white hover:border-primary hover:text-primary";
+            const btnText = isInCart 
+                ? `<span class="material-symbols-outlined text-lg">check</span> Agregado` 
+                : `<span class="material-symbols-outlined text-lg">add_shopping_cart</span> Agregar`;
 
-            // Clases dinámicas para el botón
-            const btnClass = isInCart
-              ? "bg-primary/20 text-primary border border-primary cursor-default"
-              : "bg-transparent border border-gray-600 text-white hover:border-primary hover:text-primary";
-
-            const btnText = isInCart
-              ? `<span class="material-symbols-outlined text-lg">check</span> Agregado`
-              : `<span class="material-symbols-outlined text-lg">add_shopping_cart</span> Agregar`;
-
-            // Aquí está el cambio clave: 'flex-row' para móvil, 'md:flex-col' para desktop
+            // CAMBIO: Usamos <article> en lugar de <a> para el contenedor principal
+            // Agregamos onclick="window.location.href='detalles.html'" al contenedor
             return `
-            <a href="detalles.html"  class="group relative flex flex-row md:flex-col bg-background-card rounded-xl overflow-hidden border border-border-dark hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-lg h-32 md:h-auto">
+            <article onclick="window.location.href='detalles.html'" class="cursor-pointer group relative flex flex-row md:flex-col bg-background-card rounded-xl overflow-hidden border border-border-dark hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-lg h-32 md:h-auto">
                 
                 <div class="relative w-1/3 md:w-full md:aspect-square overflow-hidden bg-white/5 shrink-0">
-                    ${
-                      product.badge
-                        ? `<div class="absolute top-2 left-2 md:top-3 md:left-3 z-10 bg-primary text-black text-[10px] md:text-xs font-bold px-1.5 py-0.5 rounded shadow-sm">${product.badge}</div>`
-                        : ""
-                    }
-                    <img src="${product.image}" alt="${
-              product.name
-            }" class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500">
+                    ${product.badge ? `<div class="absolute top-2 left-2 md:top-3 md:left-3 z-10 bg-primary text-black text-[10px] md:text-xs font-bold px-1.5 py-0.5 rounded shadow-sm">${product.badge}</div>` : ""}
+                    <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <div class="p-3 md:p-5 flex flex-col justify-between flex-grow w-2/3 md:w-full">
                     <div>
-                        <span class="text-[10px] md:text-xs text-gray-500 mb-0.5 md:mb-1 block uppercase tracking-wider">${
-                          product.category
-                        }</span>
-                        <h3 class="text-sm md:text-lg font-bold text-white leading-tight mb-1 line-clamp-2 group-hover:text-primary transition-colors">${
-                          product.name
-                        }</h3>
+                        <span class="text-[10px] md:text-xs text-gray-500 mb-0.5 md:mb-1 block uppercase tracking-wider">${product.category}</span>
+                        <h3 class="text-sm md:text-lg font-bold text-white leading-tight mb-1 line-clamp-2 group-hover:text-primary transition-colors">${product.name}</h3>
                     </div>
                     
                     <div class="flex items-center justify-between mt-1 md:mt-4">
-                        <span class="text-base md:text-xl font-bold text-primary font-display tracking-wide">$${product.price.toFixed(
-                          2
-                        )}</span>
+                        <span class="text-base md:text-xl font-bold text-primary font-display tracking-wide">$${product.price.toFixed(2)}</span>
                         
-                        <button ${
-                          isInCart
-                            ? "disabled"
-                            : `onclick="addToCart(${product.id})"`
-                        } 
-                                class="${btnClass} font-bold py-1.5 px-3 md:py-2 md:px-4 rounded-lg text-xs md:text-sm transition-all flex items-center gap-1 md:gap-2">
+                        <button ${isInCart ? 'disabled' : `onclick="event.stopPropagation(); addToCart(${product.id})"`} 
+                                class="${btnClass} font-bold py-1.5 px-3 md:py-2 md:px-4 rounded-lg text-xs md:text-sm transition-all flex items-center gap-1 md:gap-2 relative z-10">
                             ${btnText}
                         </button>
                     </div>
                 </div>
-            </a>
-        `;
-          })
-          .join("");
+            </article>
+        `}).join("");
       }
 
       function renderPagination() {
         const container = document.getElementById("pagination");
-        const totalPages = Math.ceil(
-          state.filteredProducts.length / state.pagination.itemsPerPage
-        );
+        const totalPages = Math.ceil(state.filteredProducts.length / state.pagination.itemsPerPage);
 
         if (totalPages <= 1) {
           container.innerHTML = "";
@@ -572,85 +366,53 @@
         }
 
         const currentPage = state.pagination.currentPage;
-
-        // Función auxiliar para generar botones
-        const createBtn = (
-          page,
-          icon = null,
-          isDisabled = false,
-          isActive = false
-        ) => `
+        
+        const createBtn = (page, icon = null, isDisabled = false, isActive = false) => `
             <button 
                 onclick="changePage(${page})" 
                 ${isDisabled ? "disabled" : ""} 
                 class="
                     h-10 min-w-[40px] px-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center
-                    ${
-                      isActive
-                        ? "bg-primary text-black shadow-[0_0_10px_rgba(203,230,0,0.3)] scale-105"
+                    ${isActive 
+                        ? "bg-primary text-black shadow-[0_0_10px_rgba(203,230,0,0.3)] scale-105" 
                         : "bg-[#1A1A1A] text-gray-400 border border-border-dark hover:border-primary hover:text-white"
                     }
-                    ${
-                      isDisabled
-                        ? "opacity-30 cursor-not-allowed hover:border-border-dark hover:text-gray-400"
-                        : ""
-                    }
+                    ${isDisabled ? "opacity-30 cursor-not-allowed hover:border-border-dark hover:text-gray-400" : ""}
                 "
             >
-                ${
-                  icon
-                    ? `<span class="material-symbols-outlined text-lg">${icon}</span>`
-                    : page
-                }
+                ${icon ? `<span class="material-symbols-outlined text-lg">${icon}</span>` : page}
             </button>
         `;
 
         let html = `
             <div class="flex items-center gap-2 p-2 bg-black/20 rounded-xl border border-white/5">
                 ${createBtn(currentPage - 1, "chevron_left", currentPage === 1)}
-                
                 <div class="flex items-center gap-1 mx-2">
-                    ${Array.from({ length: totalPages }, (_, i) => i + 1)
-                      .map((page) =>
+                    ${Array.from({length: totalPages}, (_, i) => i + 1).map(page => 
                         createBtn(page, null, false, page === currentPage)
-                      )
-                      .join("")}
+                    ).join('')}
                 </div>
-
-                ${createBtn(
-                  currentPage + 1,
-                  "chevron_right",
-                  currentPage === totalPages
-                )}
+                ${createBtn(currentPage + 1, "chevron_right", currentPage === totalPages)}
             </div>
         `;
-
         container.innerHTML = html;
       }
 
-      // --- FILTROS ---
+      // --- FILTROS & UTILS ---
       function applyFilters() {
         let result = state.products;
-
         if (state.filters.search) {
           const term = state.filters.search.toLowerCase();
-          result = result.filter(
-            (p) =>
-              p.name.toLowerCase().includes(term) ||
-              p.category.toLowerCase().includes(term)
-          );
+          result = result.filter(p => p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term));
         }
         if (state.filters.categories.length > 0) {
-          result = result.filter((p) =>
-            state.filters.categories.includes(p.category)
-          );
+          result = result.filter(p => state.filters.categories.includes(p.category));
         }
-        result = result.filter((p) => p.price <= state.filters.maxPrice);
+        result = result.filter(p => p.price <= state.filters.maxPrice);
 
         const sortValue = document.getElementById("sort-select").value;
         if (sortValue === "price-asc") result.sort((a, b) => a.price - b.price);
-        if (sortValue === "price-desc")
-          result.sort((a, b) => b.price - a.price);
+        if (sortValue === "price-desc") result.sort((a, b) => b.price - a.price);
 
         state.filteredProducts = result;
         state.pagination.currentPage = 1;
@@ -662,115 +424,68 @@
         state.filters = { search: "", categories: [], maxPrice: 2000 };
         document.getElementById("desktop-search").value = "";
         document.getElementById("mobile-search").value = "";
-
-        // Resetear inputs de UI (Desktop y Mobile)
-        document.querySelectorAll(".price-range-input").forEach((input) => {
-          input.value = 2000;
-        });
-        document.querySelectorAll(".price-display").forEach((span) => {
-          span.innerText = "$2000";
-        });
-        document
-          .querySelectorAll(".category-checkbox")
-          .forEach((cb) => (cb.checked = false));
-
+        document.querySelectorAll('.price-range-input').forEach(input => { input.value = 2000; });
+        document.querySelectorAll('.price-display').forEach(span => { span.innerText = "$2000"; });
+        document.querySelectorAll(".category-checkbox").forEach((cb) => (cb.checked = false));
         applyFilters();
       }
 
-      // --- SETUP EVENTS ---
       function setupEventListeners() {
-        // Search Sync
         const handleSearch = (e) => {
           state.filters.search = e.target.value;
-          // Sincronizar visualmente
           document.getElementById("desktop-search").value = e.target.value;
           document.getElementById("mobile-search").value = e.target.value;
           applyFilters();
         };
-        document
-          .getElementById("desktop-search")
-          .addEventListener("input", handleSearch);
-        document
-          .getElementById("mobile-search")
-          .addEventListener("input", handleSearch);
+        document.getElementById("desktop-search").addEventListener("input", handleSearch);
+        document.getElementById("mobile-search").addEventListener("input", handleSearch);
 
-        // Price Sync (Delegation para manejar ambos sliders desktop/mobile)
         const updatePrices = (val) => {
-          state.filters.maxPrice = Number(val);
-          document
-            .querySelectorAll(".price-range-input")
-            .forEach((input) => (input.value = val));
-          document
-            .querySelectorAll(".price-display")
-            .forEach((span) => (span.innerText = `$${val}`));
-          applyFilters();
-        };
-
-        document.addEventListener("input", (e) => {
-          if (e.target.classList.contains("price-range-input")) {
-            updatePrices(e.target.value);
-          }
-        });
-
-        // Categories Sync
-        document.addEventListener("change", (e) => {
-          if (e.target.classList.contains("category-checkbox")) {
-            const value = e.target.value;
-            const isChecked = e.target.checked;
-
-            // Sincronizar todos los checkboxes con el mismo valor
-            document
-              .querySelectorAll(`.category-checkbox[value="${value}"]`)
-              .forEach((cb) => {
-                cb.checked = isChecked;
-              });
-
-            // Recalcular filtro
-            const allChecked = document.querySelectorAll(
-              ".category-checkbox:checked"
-            );
-            state.filters.categories = [
-              ...new Set(Array.from(allChecked).map((cb) => cb.value)),
-            ];
+            state.filters.maxPrice = Number(val);
+            document.querySelectorAll('.price-range-input').forEach(input => input.value = val);
+            document.querySelectorAll('.price-display').forEach(span => span.innerText = `$${val}`);
             applyFilters();
-          }
+        };
+        document.addEventListener("input", (e) => {
+            if(e.target.classList.contains('price-range-input')) { updatePrices(e.target.value); }
         });
-
-        document
-          .getElementById("sort-select")
-          .addEventListener("change", applyFilters);
+        document.addEventListener("change", (e) => {
+            if (e.target.classList.contains("category-checkbox")) {
+                const value = e.target.value;
+                const isChecked = e.target.checked;
+                document.querySelectorAll(`.category-checkbox[value="${value}"]`).forEach(cb => { cb.checked = isChecked; });
+                const allChecked = document.querySelectorAll(".category-checkbox:checked");
+                state.filters.categories = [...new Set(Array.from(allChecked).map(cb => cb.value))];
+                applyFilters();
+            }
+        });
+        document.getElementById("sort-select").addEventListener("change", applyFilters);
       }
 
       // --- UI HELPERS ---
       function toggleMenu(show) {
         const body = document.body;
         const overlay = document.getElementById("overlay");
-        if (show) body.classList.remove("cart-open");
-
+        if(show) body.classList.remove("cart-open");
         if (show) {
-          body.classList.add("menu-open");
-          overlay.classList.remove("hidden");
+            body.classList.add("menu-open");
+            overlay.classList.remove("hidden");
         } else {
-          body.classList.remove("menu-open");
-          if (!body.classList.contains("cart-open")) {
-            setTimeout(() => overlay.classList.add("hidden"), 300);
-          }
+            body.classList.remove("menu-open");
+            if (!body.classList.contains("cart-open")) { setTimeout(() => overlay.classList.add("hidden"), 300); }
         }
       }
 
       function toggleCart(show) {
         const body = document.body;
         const overlay = document.getElementById("overlay");
-        if (show) body.classList.remove("menu-open");
-
+        if(show) body.classList.remove("menu-open");
         if (show) {
           body.classList.add("cart-open");
           overlay.classList.remove("hidden");
         } else {
           body.classList.remove("cart-open");
-          if (!body.classList.contains("menu-open")) {
-            setTimeout(() => overlay.classList.add("hidden"), 300);
-          }
+          if (!body.classList.contains("menu-open")) { setTimeout(() => overlay.classList.add("hidden"), 300); }
         }
       }
 
@@ -795,101 +510,58 @@
         } else {
           state.cart.push({ ...product, quantity: 1 });
         }
-
         updateCartUI();
-        renderProducts(); // Actualizar botones a estado "Agregado"
+        renderProducts();
         showToast();
-        // NOTA: Eliminamos la línea toggleCart(true) para que no se abra solo
       }
 
       function changeQuantity(productId, delta) {
-        const item = state.cart.find((i) => i.id === productId);
+        const item = state.cart.find(i => i.id === productId);
         if (!item) return;
-
         item.quantity += delta;
-
-        if (item.quantity <= 0) {
-          removeFromCart(productId);
-        } else {
-          updateCartUI();
-        }
+        if (item.quantity <= 0) { removeFromCart(productId); } else { updateCartUI(); }
       }
 
       function removeFromCart(productId) {
         state.cart = state.cart.filter((item) => item.id !== productId);
         updateCartUI();
-        renderProducts(); // Actualizar botones para que se habiliten de nuevo
+        renderProducts();
       }
 
       function updateCartUI() {
-        const totalItems = state.cart.reduce(
-          (sum, item) => sum + item.quantity,
-          0
-        );
+        const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
         const badge = document.getElementById("cart-count");
         badge.innerText = totalItems;
         badge.classList.toggle("hidden", totalItems === 0);
 
         const container = document.getElementById("cart-items");
         if (state.cart.length === 0) {
-          container.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-64 text-gray-500">
-                <span class="material-symbols-outlined text-4xl mb-2 opacity-50">shopping_cart_off</span>
-                <p>Tu carrito está vacío</p>
-            </div>`;
+          container.innerHTML = `<div class="flex flex-col items-center justify-center h-64 text-gray-500"><span class="material-symbols-outlined text-4xl mb-2 opacity-50">shopping_cart_off</span><p>Tu carrito está vacío</p></div>`;
         } else {
-          container.innerHTML = state.cart
-            .map(
-              (item) => `
+          container.innerHTML = state.cart.map((item) => `
             <div class="flex gap-3 p-3 bg-[#141414] rounded-xl border border-border-dark group hover:border-gray-700 transition-colors">
                 <div class="w-16 h-16 bg-black rounded-lg overflow-hidden shrink-0">
-                    <img src="${
-                      item.image
-                    }" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                    <img src="${item.image}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
                 </div>
-                
                 <div class="flex-1 flex flex-col justify-between">
                     <div class="flex justify-between items-start">
-                        <h4 class="text-sm font-medium text-gray-200 line-clamp-1 pr-2">${
-                          item.name
-                        }</h4>
-                        <button onclick="removeFromCart(${
-                          item.id
-                        })" class="text-gray-600 hover:text-red-500 transition-colors">
-                            <span class="material-symbols-outlined text-lg">close</span>
-                        </button>
+                        <h4 class="text-sm font-medium text-gray-200 line-clamp-1 pr-2">${item.name}</h4>
+                        <button onclick="removeFromCart(${item.id})" class="text-gray-600 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-lg">close</span></button>
                     </div>
-                    
                     <div class="flex justify-between items-end mt-1">
                         <div class="flex items-center gap-3 bg-black rounded-lg px-2 py-1 border border-border-dark">
-                            <button onclick="changeQuantity(${
-                              item.id
-                            }, -1)" class="text-gray-400 hover:text-white transition-colors w-4 flex justify-center">-</button>
-                            <span class="text-xs font-bold text-white w-4 text-center">${
-                              item.quantity
-                            }</span>
-                            <button onclick="changeQuantity(${
-                              item.id
-                            }, 1)" class="text-gray-400 hover:text-white transition-colors w-4 flex justify-center">+</button>
+                            <button onclick="changeQuantity(${item.id}, -1)" class="text-gray-400 hover:text-white transition-colors w-4 flex justify-center">-</button>
+                            <span class="text-xs font-bold text-white w-4 text-center">${item.quantity}</span>
+                            <button onclick="changeQuantity(${item.id}, 1)" class="text-gray-400 hover:text-white transition-colors w-4 flex justify-center">+</button>
                         </div>
-                        <span class="text-primary font-bold text-sm">$${(
-                          item.price * item.quantity
-                        ).toFixed(2)}</span>
+                        <span class="text-primary font-bold text-sm">$${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                 </div>
             </div>
-          `
-            )
-            .join("");
+          `).join("");
         }
-
-        const total = state.cart.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
-        );
-        document.getElementById("cart-total").innerText = `$${total.toFixed(
-          2
-        )}`;
+        const total = state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        document.getElementById("cart-total").innerText = `$${total.toFixed(2)}`;
       }
 
       function showToast() {
